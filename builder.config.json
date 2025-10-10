@@ -1,0 +1,15 @@
+{
+  "repo": {
+    "enable": false
+  },
+  "storage": {
+    "provider": "s3",
+    "endpoint": "https://minio.lan.canye365.cn",
+    "bucket": "afilmory",
+    "region": "us-east-1",
+    "accessKey": "minioadmin",
+    "secretKey": "minioadmin",
+    "prefix": "afilmory/",
+    "customDomain": "cdn.lan.canye365.cn"
+  }
+}
