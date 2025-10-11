@@ -1,6 +1,7 @@
 # Dockerfile for Next.js app in a pnpm monorepo
 # This Dockerfile should be built from the root of the monorepo:
-# > docker build -t photo-gallery-ssr -f apps/ssr/dockerfile .
+# > docker build -t iris-ssr .
+# > docker run -p 3000:3000 iris-ssr
 
 # -----------------
 # Base stage
@@ -15,15 +16,21 @@ RUN corepack enable
 FROM base AS builder
 
 RUN apk update && apk add --no-cache git perl
-COPY . .
-RUN sh ./scripts/preinstall.sh
-# Install all dependencies
-RUN pnpm install --frozen-lockfile
+
+RUN git clone https://github.com/Afilmory/Afilmory --depth 1 .
+COPY config.json ./
+COPY builder.config.json ./
+COPY .env ./
 
 ARG S3_ACCESS_KEY_ID
 ARG S3_SECRET_ACCESS_KEY
 ARG GIT_TOKEN
 ARG PG_CONNECTION_STRING
+
+RUN sh ./scripts/preinstall.sh
+# Install all dependencies
+RUN pnpm install --frozen-lockfile
+
 # Build the app.
 # The build script in the ssr package.json handles building the web app first.
 RUN pnpm --filter=@afilmory/ssr build
