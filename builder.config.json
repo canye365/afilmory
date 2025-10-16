@@ -1,6 +1,7 @@
 {
   "repo": {
-    "enable": false
+    "enable": true,
+    "url": "https://canye:12345678@git.lan.canye365.cn/canye/gallery-assets.git"
   },
   "storage": {
     "provider": "s3",

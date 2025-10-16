@@ -14,6 +14,7 @@ RUN corepack enable
 # Builder stage
 # -----------------
 FROM base AS builder
+#RUN sed -i 's#https://dl-cdn.alpinelinux.org/alpine#https://mirrors.tuna.tsinghua.edu.cn/alpine#g' /etc/apk/repositories
 
 RUN apk update && apk add --no-cache git perl
 
@@ -29,10 +30,11 @@ ARG PG_CONNECTION_STRING
 
 RUN sh ./scripts/preinstall.sh
 # Install all dependencies
+# RUN pnpm install --frozen-lockfile --child-concurrency=5
 RUN pnpm install --frozen-lockfile
-
-# Build the app.
+# Build the app. 1111
 # The build script in the ssr package.json handles building the web app first.
+# RUN pnpm --workspace-concurrency=2 --filter=@afilmory/ssr build
 RUN pnpm --filter=@afilmory/ssr build
 
 # -----------------
